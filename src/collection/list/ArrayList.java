@@ -414,13 +414,14 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
     }
 
     /**
-     * Inserts the specified element at the specified position in this
-     * list. Shifts the element currently at that position (if any) and
-     * any subsequent elements to the right (adds one to their indices).
+     * 将指定的元素插入此列表中的指定位置。向右移动当前位于该位置的元素（如果有）以及所有后续元素（将其索引加 1）。
      *
-     * @param index index at which the specified element is to be inserted
-     * @param element element to be inserted
-     * @throws IndexOutOfBoundsException {@inheritDoc}
+     * 接口 List<E> 中的 add
+     * 类 AbstractList<E> 中的 add
+     *
+     * @param index - 指定元素所插入位置的索引
+     * @param element - 要插入的元素
+     * @throws IndexOutOfBoundsException - 如果索引超出范围 ( index < 0 || index > size())
      */
     public void add(int index, E element) {
         rangeCheckForAdd(index);
@@ -433,13 +434,15 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
     }
 
     /**
-     * Removes the element at the specified position in this list.
-     * Shifts any subsequent elements to the left (subtracts one from their
-     * indices).
+     * 这个列表中删除指定位置的元素
+     * 任何后续元素转移到左(减去一个来自他们的指标)。
      *
-     * @param index the index of the element to be removed
-     * @return the element that was removed from the list
-     * @throws IndexOutOfBoundsException {@inheritDoc}
+     * 接口 List<E> 中的 remove
+     * 类 AbstractList<E> 中的 remove
+     *
+     * @param index - 要移除的元素的索引
+     * @return 从列表中移除的元素
+     * @throws IndexOutOfBoundsException - 如果索引超出范围 ( index < 0 || index >= size())
      */
     public E remove(int index) {
         rangeCheck(index);
@@ -457,17 +460,17 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
     }
 
     /**
-     * Removes the first occurrence of the specified element from this list,
-     * if it is present.  If the list does not contain the element, it is
-     * unchanged.  More formally, removes the element with the lowest index
-     * <tt>i</tt> such that
-     * <tt>(o==null&nbsp;?&nbsp;get(i)==null&nbsp;:&nbsp;o.equals(get(i)))</tt>
-     * (if such an element exists).  Returns <tt>true</tt> if this list
-     * contained the specified element (or equivalently, if this list
-     * changed as a result of the call).
+     * 移除此列表中首次出现的指定元素（如果存在）。如果列表不包含此元素，则列表不做改动。
+     * 更确切地讲，移除满足 (o==null ? get(i)==null : o.equals(get(i))) 的最低索引的元素（如果存在此类元素）。
+     * 如果列表中包含指定的元素，则返回 true（或者等同于这种情况：如果列表由于调用而发生更改，则返回 true）。
      *
-     * @param o element to be removed from this list, if present
-     * @return <tt>true</tt> if this list contained the specified element
+     * 接口 Collection<E> 中的 remove
+     * 接口 List<E> 中的 remove
+     * 类 AbstractCollection<E> 中的 remove
+     *
+     * @param o - 要从此列表中移除的元素（如果存在）
+     * @return 如果此列表包含指定的元素，则返回 true
+     *
      */
     public boolean remove(Object o) {
         if (o == null) {
@@ -487,26 +490,23 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
     }
 
     /*
-     * Private remove method that skips bounds checking and does not
-     * return the value removed.
+     * 快速删除指定位置的值，之所以叫快速，应该是不需要检查和返回值，因为只内部使用
      */
     private void fastRemove(int index) {
         modCount++;
         int numMoved = size - index - 1;
         if (numMoved > 0)
-            System.arraycopy(elementData, index+1, elementData, index,
-                    numMoved);
-        elementData[--size] = null; // clear to let GC do its work
+            System.arraycopy(elementData, index+1, elementData, index, numMoved);
+        elementData[--size] = null; // 清理来让GC工作
     }
 
     /**
-     * Removes all of the elements from this list.  The list will
-     * be empty after this call returns.
+     * 清空数组，把每一个值设为null,方便垃圾回收(不同于reset，数组默认大小有改变的话不会重置)
      */
     public void clear() {
         modCount++;
 
-        // clear to let GC do its work
+        // 清理来让GC工作
         for (int i = 0; i < size; i++)
             elementData[i] = null;
 
@@ -606,7 +606,7 @@ public class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAcce
     }
 
     /**
-     * A version of rangeCheck used by add and addAll.
+     * 一个版本 rangeCheck 被使用 add and addAll.
      */
     private void rangeCheckForAdd(int index) {
         if (index > size || index < 0)
